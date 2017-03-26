@@ -1,0 +1,3 @@
+name: BungeeStaffChat
+version: ${project.version}
+main: me.jamesj.bungee-staffchat.BungeeStaffChat
