@@ -27,8 +27,7 @@ public class JsonChannel implements IChannel {
     @Override
     public String format(String message, String sender) {
         String proxyId = "TODO";
-        return ChatColor.translateAlternateColorCodes('&',
-                format
+        return ChatColor.translateAlternateColorCodes('&', format
                         .replace("{message}", message)
                         .replace("{name}", sender)
                         .replace("{proxy}", proxyId)
