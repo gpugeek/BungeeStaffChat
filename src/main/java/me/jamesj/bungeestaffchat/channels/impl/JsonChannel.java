@@ -3,8 +3,9 @@ package me.jamesj.bungeestaffchat.channels.impl;
 import lombok.AllArgsConstructor;
 import me.jamesj.bungeestaffchat.channels.IChannel;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author JamesJ
@@ -16,8 +17,10 @@ import java.util.Set;
 public class JsonChannel implements IChannel {
     
     private final String id;
-    private final Boolean joinable;
+    private final List<String> aliases;
+
     private final String format;
+    private final String permission;
     
     @Override
     public String getId() {
@@ -25,22 +28,32 @@ public class JsonChannel implements IChannel {
     }
     
     @Override
-    public String format(String message, String sender) {
-        String proxyId = "TODO";
+    public String format(String message, String sender, String proxyId, String serverId) {
         return ChatColor.translateAlternateColorCodes('&', format
                         .replace("{message}", message)
                         .replace("{name}", sender)
+                        .replace("{server}", serverId)
                         .replace("{proxy}", proxyId)
         );
     }
-    
+
     @Override
-    public Boolean isJoinable() {
-        return joinable;
+    public List<String> getAliases() {
+        return aliases;
     }
-    
+
     @Override
-    public Set<String> getReceivers() {
-        return null;
+    public String getFormat() {
+        return format;
+    }
+
+    @Override
+    public Set<ProxiedPlayer> getReceivers() {
+        return new HashSet<>();
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
     }
 }

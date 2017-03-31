@@ -66,5 +66,17 @@
             <version>1.11-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.10</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.imaginarycode</groupId>
+            <artifactId>RedisBungee</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}/../Dependencies/RedisBungee.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,8 @@
 package me.jamesj.bungeestaffchat.channels;
 
-import java.util.Set;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.util.*;
 
 /**
  * @author JamesJ
@@ -11,8 +13,10 @@ import java.util.Set;
 public interface IChannel {
     
     String getId();
-    Boolean isJoinable();
-    String format(String message, String sender);
-    Set<String> getReceivers();
-    
+    String getFormat();
+    String getPermission();
+    String format(String message, String sender, String proxyId, String serverId);
+    Set<ProxiedPlayer> getReceivers();
+    List<String> getAliases();
+
 }

@@ -1,3 +1,5 @@
 name: BungeeStaffChat
 version: ${project.version}
-main: me.jamesj.bungee-staffchat.BungeeStaffChat
+main: me.jamesj.bungeestaffchat.BungeeStaffChat
+
+depend: [RedisBungee]
