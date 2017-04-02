@@ -1,6 +1,9 @@
 package me.jamesj.bungeestaffchat.channels.impl;
 
-import net.md_5.bungee.api.CommandSender;
+import com.google.common.base.Joiner;
+import me.jamesj.bungeestaffchat.channels.IChannel;
+import net.md_5.bungee.api.*;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -11,17 +14,25 @@ import net.md_5.bungee.api.plugin.Command;
  */
 
 public class ChannelCommand extends Command {
-    
-    public ChannelCommand(String command, String permission, String... aliases){
-        super(command, permission, aliases);
+
+    private final IChannel channel;
+    public ChannelCommand(IChannel channel){
+        super(channel.getId(), channel.getPermission(), channel.getAliases().toArray(new String[channel.getAliases().size()]));
+        this.channel = channel;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ProxiedPlayer){
-
+        if (sender instanceof ProxiedPlayer) {
+            if (args.length == 0) {
+                sender.sendMessage(new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', channel.getUsage())).create());
+                return;
+            } else {
+                String message = Joiner.on(" ").join(args);
+                channel.sendMessage(((ProxiedPlayer)sender), message);
+            }
         } else {
-
+            sender.sendMessage(new ComponentBuilder("Console cannot use this command").color(ChatColor.RED).create());
         }
     }
 }

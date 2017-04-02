@@ -16,25 +16,25 @@ public class RedisListener implements Listener {
 
     private final BungeeStaffChat bungeeStaffChat;
     private final Gson gson;
-    public RedisListener(BungeeStaffChat staffChat){
+
+    public RedisListener(BungeeStaffChat staffChat) {
         this.bungeeStaffChat = staffChat;
         this.gson = bungeeStaffChat.getGson();
     }
 
     @EventHandler
-    public void onRedisMessage(PubSubMessageEvent event){
-        if(event.getChannel().equalsIgnoreCase("bungeestaffchat-redis")){
+    public void onRedisMessage(PubSubMessageEvent event) {
+        if (event.getChannel().equalsIgnoreCase("bungeestaffchat-redis")) {
             String msg = event.getMessage();
             RedisMessage message = gson.fromJson(msg, RedisMessage.class);
-            if(message.getProxyId().equalsIgnoreCase(bungeeStaffChat.getProxyId())){
-                IChannel channel = bungeeStaffChat.getChannelHandler().getChannel(message.getChannel());
-                if(channel != null){
-                    channel.getReceivers().forEach(proxiedPlayer -> {
-                        BaseComponent[] component = new ComponentBuilder(channel.format(message.getMessage(), message.getSender(), message.getProxyId(), message.getServerId())).create();
-                        proxiedPlayer.sendMessage(component);
-                    });
-                }
+            IChannel channel = bungeeStaffChat.getChannelHandler().getChannel(message.getChannel());
+            if (channel != null) {
+                channel.getReceivers().forEach(proxiedPlayer -> {
+                    BaseComponent[] component = new ComponentBuilder(channel.format(message.getMessage(), message.getSender(), message.getProxyId(), message.getServerId())).create();
+                    proxiedPlayer.sendMessage(component);
+                });
             }
+
         }
     }
 

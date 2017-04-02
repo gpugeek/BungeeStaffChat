@@ -2,7 +2,7 @@ package me.jamesj.bungeestaffchat.channels.impl;
 
 import lombok.AllArgsConstructor;
 import me.jamesj.bungeestaffchat.channels.IChannel;
-import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.*;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.*;
@@ -21,6 +21,7 @@ public class JsonChannel implements IChannel {
 
     private final String format;
     private final String permission;
+    private final String usage;
     
     @Override
     public String getId() {
@@ -29,7 +30,7 @@ public class JsonChannel implements IChannel {
     
     @Override
     public String format(String message, String sender, String proxyId, String serverId) {
-        return ChatColor.translateAlternateColorCodes('&', format
+        return ChatColor.translateAlternateColorCodes('&', getFormat()
                         .replace("{message}", message)
                         .replace("{name}", sender)
                         .replace("{server}", serverId)
@@ -49,11 +50,19 @@ public class JsonChannel implements IChannel {
 
     @Override
     public Set<ProxiedPlayer> getReceivers() {
-        return new HashSet<>();
+        Collection<ProxiedPlayer> proxiedPlayers = ProxyServer.getInstance().getPlayers();
+        Set<ProxiedPlayer> players = new HashSet<>();
+        proxiedPlayers.forEach(proxiedPlayer -> {if(proxiedPlayer.hasPermission(getPermission())) players.add(proxiedPlayer);});
+        return players;
     }
 
     @Override
     public String getPermission() {
         return permission;
+    }
+
+    @Override
+    public String getUsage() {
+        return usage;
     }
 }

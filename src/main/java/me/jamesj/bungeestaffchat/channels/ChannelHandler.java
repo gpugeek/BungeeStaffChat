@@ -17,17 +17,15 @@ public class ChannelHandler {
     private List<IChannel> channels;
     private final File folder;
 
-    private final BungeeStaffChat bungeeStaffChat;
-
     public ChannelHandler(BungeeStaffChat bungeeStaffChat) {
-        this.bungeeStaffChat = bungeeStaffChat;
         this.channelMap = new HashMap<>();
         this.channels = new ArrayList<>();
-        this.folder = new File(bungeeStaffChat.getDataFolder(), "channels" + File.separator);
+        this.folder = bungeeStaffChat.getDataFolder();
         if (!folder.exists()) {
             folder.mkdir();
         }
         for (File file : folder.listFiles()) {
+            if(!file.getName().endsWith(".json")) continue;
             String json = getFileData(file);
             JsonChannel jsonChannel = bungeeStaffChat.getGson().fromJson(json, JsonChannel.class);
             channelMap.put(jsonChannel.getId().toLowerCase(), jsonChannel);
@@ -35,7 +33,7 @@ public class ChannelHandler {
             channels.add(jsonChannel);
 
             bungeeStaffChat.getProxy().getPluginManager()
-                    .registerCommand(bungeeStaffChat, new ChannelCommand(jsonChannel.getId(), jsonChannel.getPermission(), jsonChannel.getAliases().toArray(new String[jsonChannel.getAliases().size()])));
+                    .registerCommand(bungeeStaffChat, new ChannelCommand(jsonChannel));
         }
 
     }
