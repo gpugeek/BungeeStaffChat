@@ -1,0 +1,7 @@
+{
+  "id": "staff",
+  "aliases": ["sc", "s"],
+  "format": "&8[&bStaff]&e {name} &7({proxy},{server}): &a{message}",
+  "permission": "bungeestaffchat.channel.staff",
+  "usage": "&cIncorrect usage! /staff <message>"
+}
