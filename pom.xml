@@ -57,6 +57,10 @@
             <id>sonatype-oss-repo</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>md_5-snapshots</id>
+            <url>http://repo.md-5.net/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -73,10 +77,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.imaginarycode</groupId>
+            <groupId>com.imaginarycode.minecraft</groupId>
             <artifactId>RedisBungee</artifactId>
-            <scope>system</scope>
-            <systemPath>${basedir}/../Dependencies/RedisBungee.jar</systemPath>
+            <version>0.3.8-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
